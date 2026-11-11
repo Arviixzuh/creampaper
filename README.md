@@ -46,7 +46,7 @@ The interface only redraws when a `Signal` changes, and the window can be closed
   </tr>
   <tr>
     <td align="center" colspan="2">
-      <img src="/assets/ss_3.png" width="860" alt="Animated wallpaper playing behind the desktop icons" />
+      <img src="/assets/bg.gif" width="860" alt="Animated wallpaper playing behind the desktop icons" />
       <br /><br />
       <b>Result on the desktop</b>
       <br />
