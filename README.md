@@ -54,6 +54,7 @@ The interface only redraws when a `Signal` changes, and the window can be closed
     </td>
   </tr>
 </table>
+
 ## Architecture
 
 CreamPaper is organized into four small, well-separated layers:
