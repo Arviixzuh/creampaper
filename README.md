@@ -30,14 +30,14 @@ The interface only redraws when a `Signal` changes, and the window can be closed
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="/assets/ss_1.png" alt="CreamPaper wallpaper library" />
+      <img src="/assets/ss_1.png" alt="CreamPaper wallpaper library" width="100%" style="max-width: 100%; height: auto;" />
       <br /><br />
       <b>Library</b>
       <br />
       <sub>Thumbnails, search, and one-click apply.</sub>
     </td>
     <td align="center" width="50%">
-      <img src="/assets/ss_2.png" alt="CreamPaper settings" />
+      <img src="/assets/ss_2.png" alt="CreamPaper settings" width="100%" style="max-width: 100%; height: auto;" />
       <br /><br />
       <b>Settings</b>
       <br />
@@ -46,7 +46,7 @@ The interface only redraws when a `Signal` changes, and the window can be closed
   </tr>
   <tr>
     <td align="center" colspan="2">
-      <img src="/assets/bg.gif" width="860" alt="Animated wallpaper playing behind the desktop icons" />
+      <img src="/assets/bg.gif" alt="Animated wallpaper playing behind the desktop icons" width="100%" style="max-width: 100%; height: auto;" />
       <br /><br />
       <b>Result on the desktop</b>
       <br />
@@ -54,7 +54,6 @@ The interface only redraws when a `Signal` changes, and the window can be closed
     </td>
   </tr>
 </table>
-
 ## Architecture
 
 CreamPaper is organized into four small, well-separated layers:
