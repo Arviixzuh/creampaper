@@ -1,3 +1,4 @@
+use crate::tr;
 use crate::ui::components::*;
 use crate::ui::icons::AppIcon;
 use crate::ui::theme::{self, column};
@@ -13,15 +14,15 @@ fn note(text: &str) -> BoxedWidget {
 pub fn AboutPage(version: String) -> BoxedWidget {
     Box::new(jsx! {
         <RawView style={column(28.0).width("100%").max_width(860.0)}>
-            <PageHeader title={"Acerca de".to_owned()} subtitle={format!("CreamPaper {version} · hecho con CreamUI")} actions={Vec::new()} />
-            <SettingsSection title={"Cómo funciona".to_owned()}>
-                <SettingRow icon_name={AppIcon::Film} title={"Media Foundation".to_owned()} description={"Decodificación por hardware nativa de Windows, sin navegador embebido".to_owned()} control={note("GPU")} />
-                <SettingRow icon_name={AppIcon::Monitor} title={"Detrás de los iconos".to_owned()} description={"El video se dibuja en la capa WorkerW del escritorio".to_owned()} control={note("WorkerW")} />
-                <SettingRow icon_name={AppIcon::Zap} title={"Bajo consumo".to_owned()} description={"La interfaz solo se redibuja al cambiar el estado; el motor se pausa cuando el escritorio no es visible".to_owned()} control={note("Auto-pausa")} />
+            <PageHeader title={tr!("about.title")} subtitle={tr!("about.subtitle", version=version)} actions={Vec::new()} />
+            <SettingsSection title={tr!("about.how_it_works")}>
+                <SettingRow icon_name={AppIcon::Film} title={tr!("about.media_foundation.title")} description={tr!("about.media_foundation.desc")} control={note("GPU")} />
+                <SettingRow icon_name={AppIcon::Monitor} title={tr!("about.desktop_layer.title")} description={tr!("about.desktop_layer.desc")} control={note("WorkerW")} />
+                <SettingRow icon_name={AppIcon::Zap} title={tr!("about.low_power.title")} description={tr!("about.low_power.desc")} control={note(&tr!("about.auto_pause"))} />
             </SettingsSection>
-            <SettingsSection title={"Atajos".to_owned()}>
-                <SettingRow icon_name={AppIcon::Plus} title={"Arrastrar y soltar".to_owned()} description={"Suelta videos sobre la ventana para añadirlos".to_owned()} control={note("Drag & drop")} />
-                <SettingRow icon_name={AppIcon::Power} title={"Bandeja del sistema".to_owned()} description={"Clic en el icono para abrir; menú para pausar o salir".to_owned()} control={note("Tray")} />
+            <SettingsSection title={tr!("about.shortcuts")}>
+                <SettingRow icon_name={AppIcon::Plus} title={tr!("about.drag_drop.title")} description={tr!("about.drag_drop.desc")} control={note(&tr!("about.drag_drop.label"))} />
+                <SettingRow icon_name={AppIcon::Power} title={tr!("about.tray.title")} description={tr!("about.tray.desc")} control={note(&tr!("about.tray.label"))} />
             </SettingsSection>
         </RawView>
     })

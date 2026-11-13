@@ -1,7 +1,9 @@
 use crate::engine::{self, EngineCommand, EngineEvent, EngineHandle, PlaybackStatus};
+use crate::i18n;
 use crate::model::{self, AppData, Settings, Wallpaper, VIDEO_EXTENSIONS};
+use crate::tr;
 use creamui::render::{AppHandle, WindowHandle};
-use creamui::widgets::ScrollController;
+use creamui::widgets::{ScrollController, SelectController};
 use creamui::{ImageData, Signal};
 use std::cell::RefCell;
 use std::collections::HashMap;
@@ -44,6 +46,7 @@ pub struct AppState {
     pub search: Signal<String>,
     pub notice: Signal<Option<Notice>>,
     pub scroll: ScrollController,
+    pub lang_select: SelectController,
     /// Toggled to repaint every pixel (see `force_full_repaint`).
     pub repaint: Signal<bool>,
     app: Rc<RefCell<Option<AppHandle>>>,
@@ -53,6 +56,8 @@ pub struct AppState {
 
 impl AppState {
     pub fn new(data: AppData) -> Self {
+        i18n::set(data.settings.lang);
+        let lang_select = SelectController::new(data.settings.lang.index());
         let active = data
             .active
             .filter(|id| data.library.iter().any(|item| item.id == *id));
@@ -66,6 +71,7 @@ impl AppState {
             search: Signal::new(String::new()),
             notice: Signal::new(None),
             scroll: ScrollController::default(),
+            lang_select,
             repaint: Signal::new(false),
             app: Rc::new(RefCell::new(None)),
             window: Rc::new(RefCell::new(None)),
@@ -154,8 +160,8 @@ impl AppState {
 
     pub fn pick_files(&self) {
         let picked = rfd::FileDialog::new()
-            .set_title("Añadir wallpapers animados")
-            .add_filter("Videos", VIDEO_EXTENSIONS)
+            .set_title(tr!("file_dialog.title"))
+            .add_filter(&tr!("file_dialog.videos"), VIDEO_EXTENSIONS)
             .pick_files();
         if let Some(paths) = picked {
             self.add_files(paths);
@@ -186,22 +192,20 @@ impl AppState {
             for wallpaper in &added {
                 self.load_thumbnail(wallpaper);
             }
-            let noun = if added.len() == 1 {
-                "video añadido"
+            let message = if added.len() == 1 {
+                tr!("notice.files_added.one", count = added.len())
             } else {
-                "videos añadidos"
+                tr!("notice.files_added.many", count = added.len())
             };
-            self.notify(
-                NoticeKind::Info,
-                format!("{} {noun} a la biblioteca", added.len()),
-            );
+            self.notify(NoticeKind::Info, message);
         }
         if rejected > 0 {
             self.notify(
                 NoticeKind::Error,
-                format!(
-                    "{rejected} archivo(s) ignorado(s): formatos admitidos {}",
-                    VIDEO_EXTENSIONS.join(", ")
+                tr!(
+                    "notice.files_rejected",
+                    count = rejected,
+                    formats = VIDEO_EXTENSIONS.join(", ")
                 ),
             );
         }
@@ -214,7 +218,7 @@ impl AppState {
         if !wallpaper.exists() {
             self.notify(
                 NoticeKind::Error,
-                format!("No se encuentra el archivo {}", wallpaper.path.display()),
+                tr!("notice.file_missing", path = wallpaper.path.display()),
             );
             return;
         }
@@ -222,10 +226,7 @@ impl AppState {
         self.send(EngineCommand::Play(wallpaper.path));
         self.persist();
         if !engine::SUPPORTED {
-            self.notify(
-                NoticeKind::Info,
-                "Vista previa: el fondo animado solo se dibuja en Windows",
-            );
+            self.notify(NoticeKind::Info, tr!("notice.preview_only"));
         }
     }
 
@@ -267,6 +268,9 @@ impl AppState {
                 next.start_with_windows = previous.start_with_windows;
                 self.notify(NoticeKind::Error, error);
             }
+        }
+        if next.lang != previous.lang {
+            i18n::set(next.lang);
         }
         self.settings.set(next.clone());
         self.send(EngineCommand::Configure(next));

@@ -71,7 +71,7 @@ pub fn thumbnail(path: &Path, width: u32, height: u32) -> Option<Thumbnail> {
 }
 
 pub fn set_autostart(_enabled: bool) -> Result<(), String> {
-    Err("El inicio automático solo está disponible en Windows".into())
+    Err(crate::tr!("engine.autostart_unsupported"))
 }
 
 pub fn on_window_restored(window: &creamui::render::WindowHandle, on_restore: impl Fn() + 'static) {

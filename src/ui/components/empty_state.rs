@@ -1,4 +1,5 @@
 use super::*;
+use crate::tr;
 use crate::ui::icons::{icon, AppIcon};
 use crate::ui::theme::{self, centered_column, optional};
 use creamui::core::TextAlign;
@@ -18,7 +19,7 @@ pub fn EmptyState(title: String, message: String, on_add: Option<Callback>) -> B
         .background(theme::ACCENT_SOFT)
         .corner_radius(20.0);
     let action = on_add.map(|on_add| -> BoxedWidget {
-        jsx! { <PrimaryButton icon_name={Some(AppIcon::Plus)} label={"Añadir videos".to_owned()} on_click={on_add} /> }
+        jsx! { <PrimaryButton icon_name={Some(AppIcon::Plus)} label={tr!("library.add_videos")} on_click={on_add} /> }
     });
     Box::new(jsx! {
         <RawView style={style}>

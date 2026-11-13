@@ -31,6 +31,7 @@ pub enum AppIcon {
     Close,
     Check,
     Alert,
+    Lang,
 }
 
 fn path_data(icon: AppIcon) -> &'static str {
@@ -81,6 +82,9 @@ fn path_data(icon: AppIcon) -> &'static str {
         AppIcon::Check => r#"<path d="M5 12.5l4.5 4.5L19 7.5"/>"#,
         AppIcon::Alert => {
             r#"<circle cx="12" cy="12" r="9"/><line x1="12" y1="7.5" x2="12" y2="13"/><line x1="12" y1="16.5" x2="12.01" y2="16.5"/>"#
+        }
+        AppIcon::Lang => {
+            r#"<circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9z"/>"#
         }
     }
 }

@@ -15,11 +15,11 @@ pub enum FitMode {
 impl FitMode {
     pub const ALL: [FitMode; 3] = [FitMode::Cover, FitMode::Contain, FitMode::Stretch];
 
-    pub fn label(self) -> &'static str {
+    pub fn label(self) -> String {
         match self {
-            FitMode::Cover => "Cubrir",
-            FitMode::Contain => "Ajustar",
-            FitMode::Stretch => "Estirar",
+            FitMode::Cover => crate::i18n::t("setting.fit.cover"),
+            FitMode::Contain => crate::i18n::t("setting.fit.contain"),
+            FitMode::Stretch => crate::i18n::t("setting.fit.stretch"),
         }
     }
 
@@ -43,10 +43,44 @@ pub enum MonitorMode {
 impl MonitorMode {
     pub const ALL: [MonitorMode; 2] = [MonitorMode::All, MonitorMode::Primary];
 
+    pub fn label(self) -> String {
+        match self {
+            MonitorMode::All => crate::i18n::t("setting.monitors.all"),
+            MonitorMode::Primary => crate::i18n::t("setting.monitors.primary"),
+        }
+    }
+
+    pub fn index(self) -> usize {
+        Self::ALL.iter().position(|mode| *mode == self).unwrap_or(0)
+    }
+
+    pub fn from_index(index: usize) -> Self {
+        Self::ALL.get(index).copied().unwrap_or_default()
+    }
+}
+
+/// Lang option
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Lang {
+    #[default]
+    Spanish,
+    English,
+}
+
+impl Lang {
+    pub const ALL: [Lang; 2] = [Lang::Spanish, Lang::English];
+
+    pub fn code(self) -> &'static str {
+        match self {
+            Lang::Spanish => "es",
+            Lang::English => "en",
+        }
+    }
+
     pub fn label(self) -> &'static str {
         match self {
-            MonitorMode::All => "Todos",
-            MonitorMode::Primary => "Principal",
+            Lang::Spanish => "Español",
+            Lang::English => "English",
         }
     }
 
@@ -63,6 +97,7 @@ impl MonitorMode {
 #[serde(default)]
 pub struct Settings {
     pub fit: FitMode,
+    pub lang: Lang,
     pub monitors: MonitorMode,
     pub muted: bool,
     /// Linear volume in `0.0..=1.0`.
@@ -79,6 +114,7 @@ impl Default for Settings {
     fn default() -> Self {
         Settings {
             fit: FitMode::Cover,
+            lang: Lang::Spanish,
             monitors: MonitorMode::All,
             muted: true,
             volume: 0.5,

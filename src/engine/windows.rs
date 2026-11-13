@@ -280,7 +280,7 @@ impl Surface {
                 ),
                 None,
             )
-            .map_err(|error| format!("No se pudo crear la superficie de video: {error}"))?;
+            .map_err(|error| crate::tr!("engine.surface_create", error = error))?;
             if let Some(view) = icon_view(layer.parent) {
                 let _ = SetWindowPos(
                     host,
@@ -316,7 +316,7 @@ impl Surface {
                         .err()
                         .map(|error| error.message())
                         .unwrap_or_default();
-                    Err(format!("Media Foundation no pudo abrir el video. {detail}"))
+                    Err(crate::tr!("engine.media_open", detail = detail))
                 }
             }
         }
@@ -484,17 +484,20 @@ unsafe fn show_tray_menu(hwnd: HWND) {
     let Ok(menu) = CreatePopupMenu() else {
         return;
     };
+    let open = wide(&crate::tr!("tray.open"));
     let toggle = if TRAY_PLAYING.load(Ordering::Relaxed) == 1 {
-        w!("Pausar")
+        wide(&crate::tr!("tray.pause"))
     } else {
-        w!("Reanudar")
+        wide(&crate::tr!("tray.resume"))
     };
-    let _ = AppendMenuW(menu, MF_STRING, ACTION_SHOW, w!("Abrir CreamPaper"));
+    let stop = wide(&crate::tr!("tray.stop"));
+    let quit = wide(&crate::tr!("tray.quit"));
+    let _ = AppendMenuW(menu, MF_STRING, ACTION_SHOW, PCWSTR(open.as_ptr()));
     let _ = AppendMenuW(menu, MF_SEPARATOR, 0, None);
-    let _ = AppendMenuW(menu, MF_STRING, ACTION_TOGGLE, toggle);
-    let _ = AppendMenuW(menu, MF_STRING, ACTION_STOP, w!("Quitar fondo animado"));
+    let _ = AppendMenuW(menu, MF_STRING, ACTION_TOGGLE, PCWSTR(toggle.as_ptr()));
+    let _ = AppendMenuW(menu, MF_STRING, ACTION_STOP, PCWSTR(stop.as_ptr()));
     let _ = AppendMenuW(menu, MF_SEPARATOR, 0, None);
-    let _ = AppendMenuW(menu, MF_STRING, ACTION_QUIT, w!("Salir"));
+    let _ = AppendMenuW(menu, MF_STRING, ACTION_QUIT, PCWSTR(quit.as_ptr()));
     let mut cursor = POINT::default();
     let _ = GetCursorPos(&mut cursor);
     let _ = SetForegroundWindow(hwnd);
@@ -696,9 +699,9 @@ impl Engine {
             return;
         };
         let Some(layer) = desktop_layer() else {
-            (self.emit)(EngineEvent::Error(
-                "No se encontró la capa del escritorio de Windows".into(),
-            ));
+            (self.emit)(EngineEvent::Error(crate::tr!(
+                "engine.desktop_layer_missing"
+            )));
             return;
         };
         for monitor in monitors(self.settings.monitors) {
@@ -835,8 +838,9 @@ pub fn run(
         let _ = CoInitializeEx(None, COINIT_APARTMENTTHREADED);
         let media = MFStartup(MF_VERSION, MFSTARTUP_LITE);
         if let Err(error) = &media {
-            emit(EngineEvent::Error(format!(
-                "Media Foundation no está disponible: {error}"
+            emit(EngineEvent::Error(crate::tr!(
+                "engine.media_unavailable",
+                error = error
             )));
         }
         // Ensure this thread has a message queue before publishing its id.
@@ -887,9 +891,9 @@ pub fn run(
                     WM_MEDIA_READY => engine.apply_settings(),
                     WM_MEDIA_ERROR => {
                         let code = windows::core::HRESULT(message.wParam.0 as u32 as i32);
-                        (engine.emit)(EngineEvent::Error(format!(
-                            "Error al reproducir el video: {}",
-                            code.message()
+                        (engine.emit)(EngineEvent::Error(crate::tr!(
+                            "engine.play_error",
+                            error = code.message()
                         )));
                         engine.stop();
                         (engine.emit)(EngineEvent::Stopped);
@@ -1026,7 +1030,7 @@ pub fn set_autostart(enabled: bool) -> Result<(), String> {
             let mut exe = [0u16; 1024];
             let len = GetModuleFileNameW(None, &mut exe) as usize;
             if len == 0 {
-                return Err("No se pudo localizar el ejecutable".into());
+                return Err(crate::tr!("engine.autostart_exe_missing"));
             }
             let command = format!("\"{}\" --background", String::from_utf16_lossy(&exe[..len]));
             let value = wide(&command);
@@ -1049,10 +1053,7 @@ pub fn set_autostart(enabled: bool) -> Result<(), String> {
         if status == ERROR_SUCCESS {
             Ok(())
         } else {
-            Err(format!(
-                "No se pudo actualizar el inicio automático (código {})",
-                status.0
-            ))
+            Err(crate::tr!("engine.autostart_update", code = status.0))
         }
     }
 }

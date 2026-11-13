@@ -1,16 +1,19 @@
 use crate::engine::{PauseReason, PlaybackStatus};
+use crate::tr;
 use crate::ui::theme::{self, row};
 use creamui::{component, jsx, BoxedWidget, Color};
 
-pub fn status_label(status: PlaybackStatus) -> (&'static str, Color) {
+pub fn status_label(status: PlaybackStatus) -> (String, Color) {
     match status {
-        PlaybackStatus::Idle => ("Inactivo", theme::TEXT_FAINT),
-        PlaybackStatus::Playing => ("Reproduciendo", theme::SUCCESS),
-        PlaybackStatus::Paused(PauseReason::User) => ("En pausa", theme::WARNING),
+        PlaybackStatus::Idle => (tr!("status.idle"), theme::TEXT_FAINT),
+        PlaybackStatus::Playing => (tr!("status.playing"), theme::SUCCESS),
+        PlaybackStatus::Paused(PauseReason::User) => (tr!("status.paused"), theme::WARNING),
         PlaybackStatus::Paused(PauseReason::Fullscreen) => {
-            ("Pausa · pantalla completa", theme::WARNING)
+            (tr!("status.paused.fullscreen"), theme::WARNING)
         }
-        PlaybackStatus::Paused(PauseReason::Battery) => ("Pausa · batería", theme::WARNING),
+        PlaybackStatus::Paused(PauseReason::Battery) => {
+            (tr!("status.paused.battery"), theme::WARNING)
+        }
     }
 }
 
@@ -21,7 +24,7 @@ pub fn StatusBadge(status: PlaybackStatus) -> BoxedWidget {
     Box::new(jsx! {
         <RawView style={row(8.0).height(26.0).padding("0px 10px").background(soft).corner_radius(13.0)}>
             <RawView style={creamui::Style::new().width(7.0).height(7.0).background(color).corner_radius(4.0)} />
-            <RawText color={color} font_size={12.0} bold={true}>{label.to_owned()}</RawText>
+            <RawText color={color} font_size={12.0} bold={true}>{label}</RawText>
         </RawView>
     })
 }

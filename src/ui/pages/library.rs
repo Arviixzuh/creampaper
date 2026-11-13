@@ -1,4 +1,5 @@
 use crate::app::AppState;
+use crate::tr;
 use crate::ui::components::*;
 use crate::ui::icons::AppIcon;
 use crate::ui::theme::{self, column, row};
@@ -20,6 +21,7 @@ fn grid_columns(content_width: f32) -> (usize, f32) {
 
 #[component]
 pub fn LibraryPage(state: AppState, content_width: f32) -> BoxedWidget {
+    let _language = state.settings.get().lang;
     let library = state.library.get();
     let query = state.search.get();
     let thumbnails = state.thumbnails.get();
@@ -34,23 +36,23 @@ pub fn LibraryPage(state: AppState, content_width: f32) -> BoxedWidget {
     let add = state.clone();
     let header_actions: Vec<BoxedWidget> = vec![
         jsx! { <SearchBox query={state.search.clone()} width={240.0} /> },
-        jsx! { <PrimaryButton icon_name={Some(AppIcon::Plus)} label={"Añadir".to_owned()} on_click={callback(move || add.pick_files())} /> },
+        jsx! { <PrimaryButton icon_name={Some(AppIcon::Plus)} label={tr!("library.add")} on_click={callback(move || add.pick_files())} /> },
     ];
 
     let body: BoxedWidget = if library.is_empty() {
         let add = state.clone();
         jsx! {
-            <EmptyState title={"Tu biblioteca está vacía".to_owned()}
-                message={"Añade videos MP4, WebM, MKV o MOV, o arrástralos a esta ventana. Se reproducen detrás de los iconos del escritorio con aceleración por hardware.".to_owned()}
+            <EmptyState title={tr!("library.empty.title")}
+                message={tr!("library.empty.message")}
                 on_add={Some(callback(move || add.pick_files()))} />
         }
     } else if visible.is_empty() {
         let clear = state.clone();
         Box::new(jsx! {
             <RawView style={column(14.0).width("100%")}>
-                <EmptyState title={"Sin resultados".to_owned()} message={format!("Ningún video coincide con \"{query}\"")} on_add={None} />
+                <EmptyState title={tr!("library.no_results.title")} message={tr!("library.no_results.message", query=query)} on_add={None} />
                 <RawView style={row(0.0)}>
-                    <GhostButton icon_name={Some(AppIcon::Close)} label={"Limpiar búsqueda".to_owned()} on_click={callback(move || clear.search.set(String::new()))} />
+                    <GhostButton icon_name={Some(AppIcon::Close)} label={tr!("library.clear_search")} on_click={callback(move || clear.search.set(String::new()))} />
                 </RawView>
             </RawView>
         })
@@ -84,13 +86,18 @@ pub fn LibraryPage(state: AppState, content_width: f32) -> BoxedWidget {
     };
 
     let count = library.len();
+    let subtitle = if count == 1 {
+        tr!("library.subtitle.one", count = count)
+    } else {
+        tr!("library.subtitle.many", count = count)
+    };
     Box::new(jsx! {
         <RawView style={column(24.0).width("100%")}>
-            <PageHeader title={"Biblioteca".to_owned()}
-                subtitle={format!("{count} {} · haz clic en una miniatura para aplicarla", if count == 1 { "video" } else { "videos" })}
+            <PageHeader title={tr!("library.title")}
+                subtitle={subtitle}
                 actions={header_actions} />
             <NowPlaying state={state.clone()} />
-            <RawText color={theme::TEXT_FAINT} font_size={11.5} bold={true}>"TUS WALLPAPERS"</RawText>
+            <RawText color={theme::TEXT_FAINT} font_size={11.5} bold={true}>{tr!("library.wallpapers")}</RawText>
             {body}
         </RawView>
     })

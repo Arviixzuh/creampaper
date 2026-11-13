@@ -4,6 +4,7 @@
 
 mod app;
 mod engine;
+mod i18n;
 mod model;
 mod ui;
 

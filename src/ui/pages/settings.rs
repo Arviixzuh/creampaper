@@ -1,6 +1,7 @@
 use crate::app::AppState;
 use crate::engine;
-use crate::model::{FitMode, MonitorMode, Settings};
+use crate::model::{FitMode, Lang, MonitorMode, Settings};
+use crate::tr;
 use crate::ui::components::*;
 use crate::ui::icons::AppIcon;
 use crate::ui::theme::column;
@@ -24,6 +25,7 @@ pub fn SettingsPage(state: AppState) -> BoxedWidget {
                 on_change={Rc::new(move |index: usize| state.update_settings(|s| s.fit = FitMode::from_index(index)))} />
         }
     };
+
     let monitor_index = settings.monitors.index();
     let monitors = {
         let state = state.clone();
@@ -32,6 +34,7 @@ pub fn SettingsPage(state: AppState) -> BoxedWidget {
                 on_change={Rc::new(move |index: usize| state.update_settings(|s| s.monitors = MonitorMode::from_index(index)))} />
         }
     };
+
     let volume = {
         let state = state.clone();
         jsx! {
@@ -39,36 +42,49 @@ pub fn SettingsPage(state: AppState) -> BoxedWidget {
                 on_change={Rc::new(move |value: f32| state.update_settings(|s| s.volume = (value * 100.0).round() / 100.0))} />
         }
     };
+
+    let lang = {
+        let state = state.clone();
+        jsx! {
+            <DropdownSelect
+                options={Lang::ALL.iter().map(|lang| lang.label().to_owned()).collect()}
+                controller={state.lang_select.clone()}
+                on_change={Rc::new(move |index: usize| state.update_settings(|s| s.lang = Lang::from_index(index)))}
+            />
+        }
+    };
+
     let autostart_hint = if engine::SUPPORTED {
-        "Arranca minimizado en la bandeja al iniciar sesión"
+        tr!("setting.autostart.desc")
     } else {
-        "Disponible solo en Windows"
+        tr!("setting.autostart.unsupported")
     };
 
     Box::new(jsx! {
         <RawView style={column(28.0).width("100%").max_width(860.0)}>
-            <PageHeader title={"Ajustes".to_owned()} subtitle={"Los cambios se aplican y guardan al instante".to_owned()} actions={Vec::new()} />
-            <SettingsSection title={"Reproducción".to_owned()}>
-                <SettingRow icon_name={AppIcon::Monitor} title={"Escalado".to_owned()} description={"Cómo se adapta el video a la pantalla".to_owned()} control={fit} />
-                <SettingRow icon_name={AppIcon::Monitor} title={"Monitores".to_owned()} description={"Dónde se muestra el fondo animado".to_owned()} control={monitors} />
-                <SettingRow icon_name={AppIcon::Volume} title={"Silenciar audio".to_owned()} description={"Los fondos se reproducen sin sonido por defecto".to_owned()}
+            <PageHeader title={tr!("page.settings.title")} subtitle={tr!("page.settings.subtitle")} actions={Vec::new()} />
+            <SettingsSection title={tr!("section.playback")}>
+                <SettingRow icon_name={AppIcon::Monitor} title={tr!("setting.fit.title")} description={tr!("setting.fit.desc")} control={fit} />
+                <SettingRow icon_name={AppIcon::Monitor} title={tr!("setting.monitors.title")} description={tr!("setting.monitors.desc")} control={monitors} />
+                <SettingRow icon_name={AppIcon::Volume} title={tr!("setting.mute.title")} description={tr!("setting.mute.desc")}
                     control={toggle(&state, settings.muted, |s, v| s.muted = v)} />
-                <SettingRow icon_name={AppIcon::Volume} title={"Volumen".to_owned()} description={format!("{}%", (settings.volume * 100.0).round())} control={volume} />
+                <SettingRow icon_name={AppIcon::Volume} title={tr!("setting.volume.title")} description={format!("{}%", (settings.volume * 100.0).round())} control={volume} />
             </SettingsSection>
-            <SettingsSection title={"Ahorro de recursos".to_owned()}>
-                <SettingRow icon_name={AppIcon::Zap} title={"Pausar con apps a pantalla completa".to_owned()} description={"Juegos y videos a pantalla completa no compiten por la GPU".to_owned()}
+            <SettingsSection title={tr!("section.resources")}>
+                <SettingRow icon_name={AppIcon::Zap} title={tr!("setting.fullscreen.title")} description={tr!("setting.fullscreen.desc")}
                     control={toggle(&state, settings.pause_on_fullscreen, |s, v| s.pause_on_fullscreen = v)} />
-                <SettingRow icon_name={AppIcon::Zap} title={"Pausar con ventanas maximizadas".to_owned()} description={"Si el escritorio no se ve, no se decodifica".to_owned()}
+                <SettingRow icon_name={AppIcon::Zap} title={tr!("setting.maximized.title")} description={tr!("setting.maximized.desc")}
                     control={toggle(&state, settings.pause_on_maximized, |s, v| s.pause_on_maximized = v)} />
-                <SettingRow icon_name={AppIcon::Battery} title={"Pausar con batería".to_owned()} description={"Detiene la animación al desconectar el cargador".to_owned()}
+                <SettingRow icon_name={AppIcon::Battery} title={tr!("setting.battery.title")} description={tr!("setting.battery.desc")}
                     control={toggle(&state, settings.pause_on_battery, |s, v| s.pause_on_battery = v)} />
             </SettingsSection>
-            <SettingsSection title={"Sistema".to_owned()}>
-                <SettingRow icon_name={AppIcon::Power} title={"Iniciar con Windows".to_owned()} description={autostart_hint.to_owned()}
+            <SettingsSection title={tr!("section.system")}>
+                <SettingRow icon_name={AppIcon::Lang} title={tr!("setting.lang.title")} description={tr!("setting.lang.desc")} control={lang} />
+                <SettingRow icon_name={AppIcon::Power} title={tr!("setting.autostart.title")} description={autostart_hint}
                     control={toggle(&state, settings.start_with_windows, |s, v| s.start_with_windows = v)} />
-                <SettingRow icon_name={AppIcon::Film} title={"Restaurar último fondo".to_owned()} description={"Vuelve a reproducir el último wallpaper al abrir".to_owned()}
+                <SettingRow icon_name={AppIcon::Film} title={tr!("setting.restore.title")} description={tr!("setting.restore.desc")}
                     control={toggle(&state, settings.restore_on_launch, |s, v| s.restore_on_launch = v)} />
-                <SettingRow icon_name={AppIcon::Close} title={"Cerrar a la bandeja".to_owned()} description={"El fondo sigue activo al cerrar la ventana".to_owned()}
+                <SettingRow icon_name={AppIcon::Close} title={tr!("setting.tray.title")} description={tr!("setting.tray.desc")}
                     control={toggle(&state, settings.close_to_tray, |s, v| s.close_to_tray = v)} />
             </SettingsSection>
         </RawView>

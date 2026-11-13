@@ -1,0 +1,316 @@
+lang.name:
+  es: Español
+  en: English
+
+nav.library:
+  es: Biblioteca
+  en: Library
+nav.settings:
+  es: Ajustes
+  en: Settings
+nav.about:
+  es: Acerca de
+  en: About
+
+sidebar.subtitle:
+  es: Fondos animados
+  en: Animated wallpapers
+sidebar.engine:
+  es: MOTOR
+  en: ENGINE
+sidebar.library_count:
+  es: "{count} videos en la biblioteca"
+  en: "{count} videos in the library"
+
+library.add:
+  es: Añadir
+  en: Add
+library.empty.title:
+  es: Tu biblioteca está vacía
+  en: Your library is empty
+library.empty.message:
+  es: Añade videos MP4, WebM, MKV o MOV, o arrástralos a esta ventana. Se reproducen detrás de los iconos del escritorio con aceleración por hardware.
+  en: Add MP4, WebM, MKV, or MOV videos, or drag them into this window. They play behind your desktop icons with hardware acceleration.
+library.no_results.title:
+  es: Sin resultados
+  en: No results
+library.no_results.message:
+  es: Ningún video coincide con la búsqueda {query}
+  en: No videos match the search {query}
+library.clear_search:
+  es: Limpiar búsqueda
+  en: Clear search
+library.title:
+  es: Biblioteca
+  en: Library
+library.subtitle.one:
+  es: "{count} video · haz clic en una miniatura para aplicarla"
+  en: "{count} video · click a thumbnail to apply it"
+library.subtitle.many:
+  es: "{count} videos · haz clic en una miniatura para aplicarla"
+  en: "{count} videos · click a thumbnail to apply one"
+library.wallpapers:
+  es: TUS WALLPAPERS
+  en: YOUR WALLPAPERS
+library.add_videos:
+  es: Añadir videos
+  en: Add videos
+
+search.placeholder:
+  es: Buscar wallpapers…
+  en: Search wallpapers…
+
+now_playing.label:
+  es: FONDO ACTUAL
+  en: CURRENT WALLPAPER
+now_playing.empty.title:
+  es: Sin fondo animado
+  en: No animated wallpaper
+now_playing.empty.message:
+  es: Elige un video de tu biblioteca para usarlo como fondo
+  en: Choose a video from your library to use as your wallpaper
+
+wallpaper.active:
+  es: Activo
+  en: Active
+wallpaper.missing:
+  es: Archivo no encontrado
+  en: File not found
+wallpaper.unnamed:
+  es: Sin nombre
+  en: Unnamed
+
+status.idle:
+  es: Inactivo
+  en: Idle
+status.playing:
+  es: Reproduciendo
+  en: Playing
+status.paused:
+  es: En pausa
+  en: Paused
+status.paused.fullscreen:
+  es: Pausa · pantalla completa
+  en: Paused · fullscreen
+status.paused.battery:
+  es: Pausa · batería
+  en: Paused · battery
+
+control.muted:
+  es: Silenciado
+  en: Muted
+
+setting.fit.cover:
+  es: Cubrir
+  en: Cover
+setting.fit.contain:
+  es: Ajustar
+  en: Contain
+setting.fit.stretch:
+  es: Estirar
+  en: Stretch
+setting.monitors.all:
+  es: Todos
+  en: All
+setting.monitors.primary:
+  es: Principal
+  en: Primary
+
+about.title:
+  es: Acerca de
+  en: About
+about.subtitle:
+  es: CreamPaper {version} · hecho con CreamUI
+  en: CreamPaper {version} · made with CreamUI
+about.how_it_works:
+  es: Cómo funciona
+  en: How it works
+about.media_foundation.title:
+  es: Media Foundation
+  en: Media Foundation
+about.media_foundation.desc:
+  es: Decodificación por hardware nativa de Windows, sin navegador embebido
+  en: Native Windows hardware decoding, with no embedded browser
+about.desktop_layer.title:
+  es: Detrás de los iconos
+  en: Behind the icons
+about.desktop_layer.desc:
+  es: El video se dibuja en la capa WorkerW del escritorio
+  en: The video is rendered on the desktop's WorkerW layer
+about.low_power.title:
+  es: Bajo consumo
+  en: Low power
+about.low_power.desc:
+  es: La interfaz solo se redibuja al cambiar el estado; el motor se pausa cuando el escritorio no es visible
+  en: The interface only redraws when its state changes; the engine pauses when the desktop isn't visible
+about.shortcuts:
+  es: Atajos
+  en: Tips
+about.drag_drop.title:
+  es: Arrastrar y soltar
+  en: Drag and drop
+about.drag_drop.desc:
+  es: Suelta videos sobre la ventana para añadirlos
+  en: Drop videos onto the window to add them
+about.tray.title:
+  es: Bandeja del sistema
+  en: System tray
+about.tray.desc:
+  es: Clic en el icono para abrir; menú para pausar o salir
+  en: Click the icon to open; use the menu to pause or exit
+about.auto_pause:
+  es: Auto-pausa
+  en: Auto-pause
+about.drag_drop.label:
+  es: Arrastrar y soltar
+  en: Drag and drop
+about.tray.label:
+  es: Bandeja del sistema
+  en: System tray
+
+file_dialog.title:
+  es: Añadir wallpapers animados
+  en: Add animated wallpapers
+file_dialog.videos:
+  es: Videos
+  en: Videos
+notice.files_added.one:
+  es: "{count} video añadido a la biblioteca"
+  en: "{count} video added to the library"
+notice.files_added.many:
+  es: "{count} videos añadidos a la biblioteca"
+  en: "{count} videos added to the library"
+notice.files_rejected:
+  es: "{count} archivo(s) ignorado(s): formatos admitidos {formats}"
+  en: "{count} file(s) skipped: supported formats {formats}"
+notice.file_missing:
+  es: No se encuentra el archivo {path}
+  en: File not found: {path}
+notice.preview_only:
+  es: Vista previa: el fondo animado solo se dibuja en Windows
+  en: Preview only: animated wallpapers are only rendered on Windows
+
+tray.open:
+  es: Abrir CreamPaper
+  en: Open CreamPaper
+tray.pause:
+  es: Pausar
+  en: Pause
+tray.resume:
+  es: Reanudar
+  en: Resume
+tray.stop:
+  es: Quitar fondo animado
+  en: Remove animated wallpaper
+tray.quit:
+  es: Salir
+  en: Exit
+
+engine.surface_create:
+  es: No se pudo crear la superficie de video: {error}
+  en: Could not create the video surface: {error}
+engine.media_open:
+  es: Media Foundation no pudo abrir el video. {detail}
+  en: Media Foundation could not open the video. {detail}
+engine.desktop_layer_missing:
+  es: No se encontró la capa del escritorio de Windows
+  en: The Windows desktop layer could not be found
+engine.media_unavailable:
+  es: Media Foundation no está disponible: {error}
+  en: Media Foundation is unavailable: {error}
+engine.play_error:
+  es: "Error al reproducir el video: {error}"
+  en: "Error playing video: {error}"
+engine.autostart_exe_missing:
+  es: No se pudo localizar el ejecutable
+  en: Could not locate the executable
+engine.autostart_update:
+  es: No se pudo actualizar el inicio automático (código {code})
+  en: Could not update startup settings (code {code})
+engine.autostart_unsupported:
+  es: El inicio automático solo está disponible en Windows
+  en: Startup on login is only available on Windows
+
+page.settings.title:
+  es: Ajustes
+  en: Settings
+page.settings.subtitle:
+  es: Los cambios se aplican y guardan al instante
+  en: Changes are applied and saved instantly
+
+section.playback:
+  es: Reproducción
+  en: Playback
+section.resources:
+  es: Ahorro de recursos
+  en: Resource saving
+section.system:
+  es: Sistema
+  en: System
+
+setting.fit.title:
+  es: Escalado
+  en: Scaling
+setting.fit.desc:
+  es: Cómo se adapta el video a la pantalla
+  en: How the video fits the screen
+setting.monitors.title:
+  es: Monitores
+  en: Monitors
+setting.monitors.desc:
+  es: Dónde se muestra el fondo animado
+  en: Where the animated background is shown
+setting.mute.title:
+  es: Silenciar audio
+  en: Mute audio
+setting.mute.desc:
+  es: Los fondos se reproducen sin sonido por defecto
+  en: Wallpapers play without sound by default
+setting.volume.title:
+  es: Volumen
+  en: Volume
+setting.fullscreen.title:
+  es: Pausar con apps a pantalla completa
+  en: Pause on fullscreen apps
+setting.fullscreen.desc:
+  es: Juegos y videos a pantalla completa no compiten por la GPU
+  en: Fullscreen games and videos won't compete for the GPU
+setting.maximized.title:
+  es: Pausar con ventanas maximizadas
+  en: Pause on maximized windows
+setting.maximized.desc:
+  es: Si el escritorio no se ve, no se decodifica
+  en: If the desktop isn't visible, it isn't decoded
+setting.battery.title:
+  es: Pausar con batería
+  en: Pause on battery
+setting.battery.desc:
+  es: Detiene la animación al desconectar el cargador
+  en: Stops the animation when unplugged
+setting.lang.title:
+  es: Idioma
+  en: Language
+setting.lang.desc:
+  es: Idioma de la interfaz
+  en: Interface language
+setting.autostart.title:
+  es: Iniciar con Windows
+  en: Start with Windows
+setting.autostart.desc:
+  es: Arranca minimizado en la bandeja al iniciar sesión
+  en: Starts minimized in the tray at login
+setting.autostart.unsupported:
+  es: Disponible solo en Windows
+  en: Windows only
+setting.restore.title:
+  es: Restaurar último fondo
+  en: Restore last wallpaper
+setting.restore.desc:
+  es: Vuelve a reproducir el último wallpaper al abrir
+  en: Plays the last wallpaper again on launch
+setting.tray.title:
+  es: Cerrar a la bandeja
+  en: Close to tray
+setting.tray.desc:
+  es: El fondo sigue activo al cerrar la ventana
+  en: The wallpaper stays active when the window is closed

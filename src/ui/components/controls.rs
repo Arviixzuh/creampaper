@@ -11,7 +11,7 @@ pub fn Toggle(checked: bool, on_toggle: Callback) -> BoxedWidget {
 #[component]
 pub fn Segmented(
     selected: usize,
-    options: Vec<&'static str>,
+    options: Vec<String>,
     on_change: Rc<dyn Fn(usize)>,
 ) -> BoxedWidget {
     let mut control = SegmentedControl::new(selected, move |index| on_change(index));
@@ -25,7 +25,7 @@ pub fn Segmented(
 pub fn VolumeSlider(value: f32, disabled: bool, on_change: Rc<dyn Fn(f32)>) -> BoxedWidget {
     if disabled {
         return Box::new(jsx! {
-            <RawText color={crate::ui::theme::TEXT_FAINT} font_size={12.5}>"Silenciado"</RawText>
+            <RawText color={crate::ui::theme::TEXT_FAINT} font_size={12.5}>{crate::tr!("control.muted")}</RawText>
         });
     }
     Box::new(jsx! {

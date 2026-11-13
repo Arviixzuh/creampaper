@@ -1,6 +1,7 @@
 use super::*;
 use crate::app::AppState;
 use crate::engine::PlaybackStatus;
+use crate::tr;
 use crate::ui::icons::AppIcon;
 use crate::ui::theme::{self, column, ellipsize, row};
 use creamui::core::layout::JustifyContent;
@@ -9,6 +10,7 @@ use creamui::{component, jsx, BoxedWidget};
 /// Hero card at the top of the library with the live wallpaper and controls.
 #[component]
 pub fn NowPlaying(state: AppState) -> BoxedWidget {
+    let _language = state.settings.get().lang;
     let status = state.status.get();
     let active = state.active_wallpaper();
     let thumbnail = active
@@ -28,8 +30,8 @@ pub fn NowPlaying(state: AppState) -> BoxedWidget {
             format!("{} · {}", item.format_label(), item.size_label()),
         ),
         None => (
-            "Sin fondo animado".to_owned(),
-            "Elige un video de tu biblioteca para usarlo como fondo".to_owned(),
+            tr!("now_playing.empty.title"),
+            tr!("now_playing.empty.message"),
         ),
     };
 
@@ -55,7 +57,7 @@ pub fn NowPlaying(state: AppState) -> BoxedWidget {
         <RawView style={style}>
             <Thumbnail image={thumbnail} width={168.0} height={94.5} radius={10.0} />
             <RawView style={column(6.0).flex_grow(1.0).flex_shrink(1.0).justify_content(JustifyContent::Center)}>
-                <RawText color={theme::TEXT_FAINT} font_size={11.0} bold={true}>"FONDO ACTUAL"</RawText>
+                <RawText color={theme::TEXT_FAINT} font_size={11.0} bold={true}>{tr!("now_playing.label")}</RawText>
                 <RawText color={theme::TEXT} font_size={18.0} bold={true}>{title}</RawText>
                 <RawText color={theme::TEXT_MUTED} font_size={12.5}>{detail}</RawText>
                 <RawView style={row(0.0).padding_top(4.0)}><StatusBadge status={status} /></RawView>

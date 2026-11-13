@@ -16,6 +16,7 @@ mod sidebar;
 mod status_badge;
 mod thumbnail;
 mod wallpaper_card;
+mod dropdown_select;
 
 pub use buttons::*;
 pub use controls::*;
@@ -32,6 +33,7 @@ pub use sidebar::*;
 pub use status_badge::*;
 pub use thumbnail::*;
 pub use wallpaper_card::*;
+pub use dropdown_select::*;
 
 /// Click handler shared between a component and the closures it builds.
 pub type Callback = std::rc::Rc<dyn Fn()>;

@@ -1,5 +1,6 @@
 use super::*;
 use crate::model::Wallpaper;
+use crate::tr;
 use crate::ui::icons::{icon, AppIcon};
 use crate::ui::theme::{self, column, ellipsize, optional, row};
 use creamui::core::layout::{JustifyContent, Position};
@@ -38,13 +39,13 @@ pub fn WallpaperCard(
         Box::new(jsx! {
             <RawView style={row(6.0).position(Position::Absolute).top(10.0).left(10.0).height(24.0).padding("0px 9px").background(theme::ACCENT).corner_radius(12.0)}>
                 {icon(AppIcon::Check, Color::rgb(255, 255, 255), 12.0)}
-                <RawText color={Color::rgb(255, 255, 255)} font_size={11.5} bold={true}>"Activo"</RawText>
+                <RawText color={Color::rgb(255, 255, 255)} font_size={11.5} bold={true}>{tr!("wallpaper.active")}</RawText>
             </RawView>
         })
     });
     let missing = !wallpaper.exists();
     let meta = if missing {
-        "Archivo no encontrado".to_owned()
+        tr!("wallpaper.missing")
     } else {
         format!("{} · {}", wallpaper.format_label(), wallpaper.size_label())
     };

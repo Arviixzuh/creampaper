@@ -29,7 +29,7 @@ impl Wallpaper {
         let name = path
             .file_stem()
             .map(|stem| stem.to_string_lossy().replace(['_', '-'], " "))
-            .unwrap_or_else(|| "Sin nombre".into());
+            .unwrap_or_else(|| crate::i18n::t("wallpaper.unnamed"));
         let added_at = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .map_or(0, |elapsed| elapsed.as_secs());
