@@ -10,7 +10,7 @@ use creamui::{BoxedWidget, Size};
 
 const WINDOW_WIDTH: u32 = 1120;
 const WINDOW_HEIGHT: u32 = 720;
-const MIN_WIDTH: u32 = 880;
+const MIN_WIDTH: u32 = 980;
 const MIN_HEIGHT: u32 = 580;
 
 #[cfg(windows)]
