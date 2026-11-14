@@ -30,14 +30,14 @@ The interface only redraws when a `Signal` changes, and the window can be closed
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="/assets/ss_1.png" alt="CreamPaper wallpaper library" width="100%" style="max-width: 100%; height: auto;" />
+      <img src="/assets/sc_1.PNG" alt="CreamPaper wallpaper library" width="100%" style="max-width: 100%; height: auto;" />
       <br /><br />
       <b>Library</b>
       <br />
       <sub>Thumbnails, search, and one-click apply.</sub>
     </td>
     <td align="center" width="50%">
-      <img src="/assets/ss_2.png" alt="CreamPaper settings" width="100%" style="max-width: 100%; height: auto;" />
+      <img src="/assets/sc_2.PNG" alt="CreamPaper settings" width="100%" style="max-width: 100%; height: auto;" />
       <br /><br />
       <b>Settings</b>
       <br />
