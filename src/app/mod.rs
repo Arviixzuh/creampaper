@@ -6,7 +6,7 @@ pub use state::{AppState, Notice, NoticeKind, Page};
 
 use crate::{engine, model, ui};
 use creamui::render::{AppBuilder, AppHandle, WindowHandle, WindowOptions};
-use creamui::{BoxedWidget, Size};
+use creamui::{BlurRegion, BoxedWidget, Size};
 
 const WINDOW_WIDTH: u32 = 1120;
 const WINDOW_HEIGHT: u32 = 720;
@@ -102,12 +102,14 @@ pub fn launch() {
                 title: "CreamPaper".into(),
                 width: WINDOW_WIDTH,
                 height: WINDOW_HEIGHT,
-                decorations: true,
+                decorations: false, 
+                transparent: true,
+                blur: Some(BlurRegion::Window),
                 resizable: true,
                 theme,
                 ..Default::default()
             },
-            theme.colors.surface,
+            creamui::Color::rgba(0, 0, 0, 0),
             on_ready,
             build_ui,
         )

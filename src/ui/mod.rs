@@ -11,9 +11,10 @@ mod pages;
 pub mod theme;
 use crate::app::{AppState, Page};
 use components::*;
+use creamui::widgets::{AppTitlebar, Text};
 use creamui::{jsx, BoxedWidget, Size};
 use pages::*;
-use theme::{column, optional, row, PAGE_PADDING, SCROLLBAR_ALLOWANCE, SIDEBAR_WIDTH};
+use theme::{column, optional, row, PAGE_PADDING, SCROLLBAR_ALLOWANCE, SIDEBAR_WIDTH, TITLEBAR_HEIGHT};
 
 pub fn root(state: AppState, viewport: Size) -> BoxedWidget {
     let content_width =
@@ -40,15 +41,25 @@ pub fn root(state: AppState, viewport: Size) -> BoxedWidget {
         "28px {}px {PAGE_PADDING}px {PAGE_PADDING}px",
         PAGE_PADDING + SCROLLBAR_ALLOWANCE
     ));
+    let pane_width = viewport.width - SIDEBAR_WIDTH;
+    let titlebar: BoxedWidget = Box::new(
+        AppTitlebar::new(viewport.width)
+            .origin_x(SIDEBAR_WIDTH)
+            .height(TITLEBAR_HEIGHT)
+            .center(Text::new("CreamPaper")),
+    );
     Box::new(jsx! {
         <RawView style={row(0.0).width(viewport.width).height(viewport.height).background(background)}>
             <Sidebar state={state.clone()} viewport_height={viewport.height} />
-            <Scroll controller={state.scroll.clone()} style={creamui::Style::new().width(viewport.width - SIDEBAR_WIDTH).height(viewport.height)}>
-                <RawView style={content}>
-                    {optional(notice)}
-                    {page}
-                </RawView>
-            </Scroll>
+            <RawView style={column(0.0).width(pane_width).height(viewport.height)}>
+                {titlebar}
+                <Scroll controller={state.scroll.clone()} style={creamui::Style::new().width(pane_width).height(viewport.height - TITLEBAR_HEIGHT)}>
+                    <RawView style={content}>
+                        {optional(notice)}
+                        {page}
+                    </RawView>
+                </Scroll>
+            </RawView>
         </RawView>
     })
 }

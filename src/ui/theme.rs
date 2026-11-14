@@ -6,15 +6,17 @@ use creamui::widgets::RawView;
 use creamui::{BoxedWidget, Color, ColorScheme, Style, Theme};
 
 pub const SIDEBAR_WIDTH: f32 = 232.0;
+pub const TITLEBAR_HEIGHT: f32 = 36.0;
 pub const PAGE_PADDING: f32 = 32.0;
 pub const SCROLLBAR_ALLOWANCE: f32 = 14.0;
 
-pub const BACKGROUND: Color = Color::rgb(0x00, 0x00, 0x00);
-pub const BACKGROUND_REPAINT: Color = Color::rgb(0x00, 0x00, 0x01);
-pub const SIDEBAR: Color = Color::rgb(0x0a, 0x0a, 0x0a);
-pub const CARD: Color = Color::rgb(0x0a, 0x0a, 0x0a);
-pub const CARD_HOVER: Color = Color::rgb(0x14, 0x14, 0x14);
-pub const FIELD: Color = Color::rgb(0x11, 0x11, 0x11);
+pub const BACKGROUND: Color = Color::rgba(0x00, 0x00, 0x00, 110);
+pub const BACKGROUND_REPAINT: Color = Color::rgba(0x00, 0x00, 0x00, 111);
+pub const SURFACE: Color = Color::rgba(0x08, 0x08, 0x08, 180);
+pub const SIDEBAR: Color = Color::rgba(0x0a, 0x0a, 0x0a, 215);
+pub const CARD: Color = Color::rgba(0x0a, 0x0a, 0x0a, 195);
+pub const CARD_HOVER: Color = Color::rgba(0x14, 0x14, 0x14, 220);
+pub const FIELD: Color = Color::rgba(0x11, 0x11, 0x11, 205);
 pub const BORDER: Color = Color::rgba(255, 255, 255, 26);
 pub const BORDER_STRONG: Color = Color::rgba(255, 255, 255, 51);
 
@@ -34,12 +36,12 @@ pub const DANGER_SOFT: Color = Color::rgba(0xff, 0x4d, 0x4d, 36);
 
 pub const BRAND_GRADIENT: &str = "linear-gradient(135deg, #fffdf8, #f0e6d2)";
 pub const PLACEHOLDER_GRADIENT: &str = "linear-gradient(135deg, #171717, #0a0a0a)";
-pub const HERO_GRADIENT: &str = "linear-gradient(120deg, #111111, #000000)";
+pub const HERO_GRADIENT: &str = "linear-gradient(120deg, #111111e6, #000000cc)";
 
 pub fn app_theme() -> Theme {
     let mut theme = Theme::dark();
     theme.colors = ColorScheme {
-        surface: BACKGROUND,
+        surface: SURFACE,
         surface_elevated: CARD,
         surface_hover: CARD_HOVER,
         accent: ACCENT,

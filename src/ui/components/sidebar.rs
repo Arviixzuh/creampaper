@@ -23,8 +23,7 @@ pub fn Sidebar(state: AppState, viewport_height: f32) -> BoxedWidget {
         .height(viewport_height)
         .flex_shrink(0.0)
         .padding("22px 14px 18px 14px")
-        .background(theme::SIDEBAR)
-        .border(theme::BORDER, 1.0);
+        .background(theme::SIDEBAR);
     let logo = centered_column(0.0)
         .width(36.0)
         .height(36.0)
@@ -54,7 +53,7 @@ pub fn Sidebar(state: AppState, viewport_height: f32) -> BoxedWidget {
             </RawView>
             {Box::new(nav) as BoxedWidget}
             <RawView style={creamui::Style::new().flex_grow(1.0)} />
-            <RawView style={column(10.0).width("100%").padding(12.0).background(theme::CARD).border(theme::BORDER, 1.0).corner_radius(12.0)}>
+            <RawView style={column(10.0).width("100%").padding(12.0).background(theme::CARD).corner_radius(12.0)}>
                 <RawText color={theme::TEXT_FAINT} font_size={11.0} bold={true}>{tr!("sidebar.engine")}</RawText>
                 <StatusBadge status={status} />
                 <RawText color={theme::TEXT_MUTED} font_size={12.0}>{tr!("sidebar.library_count", count=count)}</RawText>
